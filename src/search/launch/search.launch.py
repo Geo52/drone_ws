@@ -58,11 +58,17 @@ def generate_launch_description():
         output="screen",
     )
 
+    search = Node(
+        package="search",
+        executable="search",
+    )
+
     return LaunchDescription(
         [
             gz_sim,
             image_bridge,
             camera_info_bridge,
             apriltag,
+            search
         ]
     )
