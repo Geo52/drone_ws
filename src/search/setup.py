@@ -28,8 +28,9 @@ setup(
     entry_points={
         'console_scripts': [
             'search = search.search:main',
-            'simple_search = search.simple_search:main',
             'identify = search.identify_tag:main',
+            'takeoff = search.takeoff:main',
+            'simple_takeoff = search.simple_takeoff:main',
         ],
     },
 )
