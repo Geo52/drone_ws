@@ -1,5 +1,5 @@
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess
+from launch.actions import ExecuteProcess, TimerAction
 from launch_ros.actions import Node
 
 
@@ -41,7 +41,7 @@ def generate_launch_description():
     )
 
     # AprilTag detector
-    apriltag = Node(
+    apriltag_ros = Node(
         package="apriltag_ros",
         executable="apriltag_node",
         arguments=[
@@ -57,6 +57,20 @@ def generate_launch_description():
         # parameters=[{"tags_36h11.yaml": "..."}]
         output="screen",
     )
+    mavros = TimerAction(
+        period=5.0,  # wait 5s for SITL to be ready
+        actions=[
+            ExecuteProcess(
+                cmd=[
+                    "ros2", "launch", "mavros", "apm.launch",
+                    "fcu_url:=udp://:14550@127.0.0.1:14555",
+                    "gcs_url:=udp://@",
+                ],
+                output="screen",
+            )
+        ],
+    )
+    
 
     search = Node(
         package="search",
@@ -68,7 +82,8 @@ def generate_launch_description():
             gz_sim,
             image_bridge,
             camera_info_bridge,
-            apriltag,
-            search
+            apriltag_ros,
+            mavros,
+            # search
         ]
     )
