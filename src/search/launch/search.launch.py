@@ -90,6 +90,6 @@ def generate_launch_description():
             camera_info_bridge,
             apriltag_ros,
             mavros,
-            search
+            # search
         ]
     )
