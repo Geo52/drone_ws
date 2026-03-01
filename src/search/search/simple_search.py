@@ -36,7 +36,7 @@ def main():
 
     # Takeoff to 10 meters
     takeoff_req = CommandTOL.Request()
-    takeoff_req.altitude = 10.0
+    takeoff_req.altitude = 2.0
     takeoff_client.call_async(takeoff_req)
     node.get_logger().info('Taking off to 10 meters')
 

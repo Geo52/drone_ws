@@ -57,8 +57,9 @@ def generate_launch_description():
         # parameters=[{"tags_36h11.yaml": "..."}]
         output="screen",
     )
+
     mavros = TimerAction(
-        period=5.0,  # wait 5s for SITL to be ready
+        period=5.0,
         actions=[
             ExecuteProcess(
                 cmd=[
@@ -72,10 +73,15 @@ def generate_launch_description():
     )
     
 
-    search = Node(
-        package="search",
-        executable="search",
-    )
+    search = TimerAction(
+    period=15.0,
+    actions=[
+        Node(
+            package="search",
+            executable="search",
+        )
+    ],
+)
 
     return LaunchDescription(
         [
@@ -84,6 +90,6 @@ def generate_launch_description():
             camera_info_bridge,
             apriltag_ros,
             mavros,
-            # search
+            search
         ]
     )
